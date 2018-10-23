@@ -1,12 +1,26 @@
 const graphql = require('graphql');
-const _ = require('lodash');
+const axios = require('axios');
 const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
   GraphQLSchema
 } = graphql;
-const users = require('../fixtures/mock-user-data');
+
+const CompanyType = new GraphQLObjectType({
+  name: 'Company',
+  fields: {
+    id: {
+      type: GraphQLString
+    },
+    name: {
+      type: GraphQLString
+    },
+    description: {
+      type: GraphQLString
+    }
+  }
+});
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -19,6 +33,14 @@ const UserType = new GraphQLObjectType({
     },
     age: {
       type: GraphQLInt
+    },
+    company: {
+      type: CompanyType,
+      resolve: async (parentValue) => {
+        const { companyId: id } = parentValue;
+        const { data } = await axios.get(`http://localhost:3000/companies/${id}`);
+        return data;
+      }
     }
   }
 });
@@ -33,9 +55,10 @@ const RootQuery = new GraphQLObjectType({
           type: GraphQLString
         }
       },
-      resolve(parentValue, args) {
+      resolve: async (parentValue, args) => {
         const { id } = args;
-        return _.find(users, { id });
+        const { data } = await axios.get(`http://localhost:3000/users/${id}`);
+        return data;
       }
     }
   }
