@@ -1,7 +1,11 @@
-# GraphQL Query Samples
-There are several different query types in GraphQL. Here are some of them:
+# GraphQL Query
+Queries are methods which are used to retrieve data. There are several different query types in 
+GraphQL. Here are some of them:
 
-## Basic Query Sample
+## Creating Queries
+
+## Calling Queries
+### Basic Query Sample
 GraphQL queries are very simple. You just need to call the query name, set a parameter, then list
 the fields you want to output:
 ```
@@ -32,7 +36,7 @@ that the nested query also includes a list of desired properties:
 }
 ```
 
-## Custom Field Name Sample
+### Custom Field Name Sample
 Suppose you want to look up several users with different ID. You are not allowed to do the 
 following:
 ```
@@ -68,7 +72,7 @@ name. You can, however, rename a property, like the following:
 The query above will produce two properties: `apple` and `google`, but they will contain the company
 information you are looking for. This could come in handy in some situations.
 
-## Query Fragment Sample
+### Query Fragment Sample
 If you have duplication OCD, most probably you'll be annoyed by the duplication of `id`, `name`, and 
 `description` in the previous section. 
 
